@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com/"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.4.4/tailwind.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.4.4/base.css" />
+  <style>
+    * {
+      margin-bottom: -16px;
+      text-wrap: wrap;
+      text-justify: auto;
+    }
+
+    .hi {
+      width: 400px
+    }
+  </style>
+  </style>
+  <title>signUp</title>
+</head>
+
+<body class="bg-gray-800 dark:bg-dark">
+  <h1 class="bg-green-900 text-center text-4xl font-bold text-white">signUp</h1>
+  <div class="grid justify-items-center">
+    <form action="signup" method="post" class="p-3 mt-16 hi container max-w-none h-[80] grid  bg-green-700 ">
+      <br>
+      <label for="username" class="h-[5] w-full dark:text-white">Name</label>
+      <input type="text" name="fullName" placeholder="enter ur fullName" value="<%= locals.username %>"
+        class="h-auto w-full bg-green-200">
+      <label for="username" class="h-[5] w-full dark:text-white">Username</label>
+      <input type="text" name="username" placeholder="creat a username USERNAME" value="<%= locals.username %>"
+        class="h-auto w-full bg-green-200">
+      <label for="email" class="h-[5] "> email</label>
+      <input type="text" name="email" placeholder="enter a valid EMAIL address" value="<%= locals.email %>"
+        class="h-auto w-full bg-green-200">
+      <label for="password" class="h-[5]"> password</label>
+      <input type="password" placeholder="Including Uppercase, Lowercase $ Digits" name="password"
+        class="h-auto w-full bg-green-200">
+      <button type="submit">submit</button>
+    </form>
+  </div>
+</body>
+
+</html>

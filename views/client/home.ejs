@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        /* Reset some default styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Style for the body */
+        body {
+            /* background: radial-gradient(circle, #ff7e5f, #feb47b,#f8c69f,#f2e2d7); */
+            background-color: coral;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            /* box-shadow: 
+    inset 0px 10px 50px #10cc19,
+    inset 10px 10px 50px  #0e84df,
+    inset 0px 10px 50px  #cc103f,
+    inset 10px 10px 50px  #d49204; */
+        }
+
+
+        /* Header styling */
+        header {
+            position: absolute;
+            left: 20%;
+            top: 30%;
+        }
+
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #333;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            height: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Hey <%= locals.name || locals.user || 'user' %> welcome to Our Website</h1>
+    </header>
+    <footer>
+        <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

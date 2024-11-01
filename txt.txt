@@ -1,0 +1,26 @@
+User.findByIdAndUpdate('603d2149e7f45b001cfeb333', { age: 25 }, { new: true })
+    .then(updatedUser => console.log(updatedUser))
+    .catch(error => console.error(error));
+
+else{
+        userData.push(reqData)
+        res.redirect('/')
+        fs.readFile('./model/data.json','utf-8',(err,data)=>{
+            if(err){
+                console.log('error');
+            }
+            else{
+                const parseData=JSON.parse(data)
+                const concatData=userData.concat(parseData)
+                let stringData=JSON.stringify(concatData,null,2)
+                fs.writeFile('./model/data.json',stringData,(err)=>{
+                    if(err){
+                        console.log('error found');
+                    }
+                    else{
+                        console.log("stringData");
+                    }
+                })
+            }
+        })
+    }

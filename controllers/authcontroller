@@ -1,0 +1,100 @@
+const valid = require("../utilities/valid")
+const bcrypt = require("bcrypt")
+const signupModel = require("../models/signupmodel")
+
+// signupGet
+const signupGet = (req, res) => {
+    res.render('client/signup')
+}
+const signupPost = async (req, res) => {
+    try {
+        const { fullName, username, email, password } = req.body
+        const existM = await signupModel.findOne({ email })
+        const existU = await signupModel.findOne({ username })
+
+        if (fullName === "" || username === "" || email === "" || password === "")
+            res.status(400).render("client/error", { errr: 'All Feilds Are required' })
+
+        //CHECK MAIL
+        else if (existM) {
+            res.status(400).render("client/error", { errr: 'EMAIL Already Taken' })
+        }
+        else if (!valid.mailValid(email)) {
+            res.status(400).render("client/error", { errr: 'Invalid EMAIL' })
+        }
+        // CHECK USERNAME
+        else if (existU) {
+            res.status(400).render("client/error", { errr: 'USERNAME Already Taken' }
+            )
+        }
+        // CHECK PASS
+
+        else if (!valid.passwordValid(password)) {
+            console.log(valid.passwordValid(password))
+            res.status(400).render("client/error", { errr: 'Invalid 123654789' })
+        }
+
+        else {
+
+            // Generate a random salt
+            const saltRounds = 10;
+            const salt = await bcrypt.genSalt(saltRounds)
+            const hashe = await bcrypt.hash(password, salt)
+
+
+            // NEW USER
+            const newUser = new signupModel({
+                fullName,
+                username,
+                email,
+                password: hashe
+            })
+            const user = await newUser.save()
+            res.status(200).redirect("/signin")
+        }
+    }
+    catch (err){
+        console.error('Signin failed 500', err);
+        res.status(500).json('Internal server erro(in signUP)');
+    }
+}
+
+// signIn
+const signinGet = (req, res) => {
+    res.render("client/signin")
+}
+const signinPost = async (req, res) => {
+    try {
+        const { username, pass } = req.body
+        const existU = await signupModel.findOne({ username })
+        console.log(existU.password)
+        const compaireP = await bcrypt.compare(pass, existU.password)
+        const admin = existU.role
+
+        // CHECK USER
+        if (!existU || !compaireP) {
+            res.status(404).render("client/error", { errr: "Incorrect PASSWORD or USERNAME" })
+        }
+        else if (admin === 'admin') {
+            console.log(existU.username)
+            req.session.admin = true;
+            res.redirect(`/dashboard?username=${existU.username}`)
+        }
+        else {
+            res.redirect(`/?username=${existU.username}`)
+        }
+    }
+    catch (err) {
+        console.log('Signin failed 500', err);
+        res.status(500).json('Internal server error (in signin)');
+    }
+}
+
+const home = (req, res) => {
+    username = req.query.username
+    fullName = req.query.fullName
+    res.status(200).render('client/home', { user: username, name: fullName })
+}
+
+module.exports = { signupGet, signupPost, signinGet, signinPost, home }
+
